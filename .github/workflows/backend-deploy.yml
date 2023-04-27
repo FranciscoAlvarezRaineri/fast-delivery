@@ -26,8 +26,11 @@ jobs:
         uses: google-github-actions/setup-gcloud@v1
         with:
           project_id: fast-delivery-uma
+      - name: 'Use gcloud CLI'
+          run: |
+            'gcloud info'
+            'gcloud config set account github-actions@fast-delivery-uma.iam.gserviceaccount.com'
       - name: Build and push Docker image for backend
         run: |
           docker build -t us-east1-docker.pkg.dev/fast-delivery-uma/backend/backend ./fd-backend/
-          gcloud config set account github-actions@fast-delivery-uma.iam.gserviceaccount.com
           docker push us-east1-docker.pkg.dev/fast-delivery-uma/backend/backend
