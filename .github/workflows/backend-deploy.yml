@@ -31,13 +31,8 @@ jobs:
         run: |
           gcloud config set account github-actions@fast-delivery-uma.iam.gserviceaccount.com
           gcloud auth activate-service-account github-actions@fast-delivery-uma.iam.gserviceaccount.com --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=fast-delivery-uma
-      - name: Login to GAR
-        uses: docker/login-action@v2
-        with:
-          registry: us-east1-docker.pkg.dev
-          username: _json_key
-          password: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
       - name: Build and push Docker image for backend
         run: |
           docker build -t us-east1-docker.pkg.dev/fast-delivery-uma/backend/backend ./fd-backend/
+          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-east1-docker.pkg.dev
           docker push us-east1-docker.pkg.dev/fast-delivery-uma/backend/backend
