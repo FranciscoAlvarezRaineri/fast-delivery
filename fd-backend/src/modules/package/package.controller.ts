@@ -65,7 +65,6 @@ export class PackageController {
     return await this.packageService.getPendingPackage(page, limit);
   }
 
-
   @Put(':_id/assign/')
   @ApiBearerAuth('idToken')
   @ApiOperation({ description: 'EndPoint to assing package to currentUser' })
@@ -85,11 +84,15 @@ export class PackageController {
   async getPackageHistory(
     @Query() queryPaginateDto: QueryPaginationDto,
     @Req() { currentUser }: CurrentUserRequest,
-
   ): Promise<Package[]> {
-    const { page , limit } = queryPaginateDto
-    return await this.packageService.getPackageHistory(currentUser,page,limit)
+    const { page, limit } = queryPaginateDto;
+    return await this.packageService.getPackageHistory(
+      currentUser,
+      page,
+      limit,
+    );
   }
+
   // @Put(':_id/unassign')
   // async unassignFromUser(@Param('_id') _id) {
   //   return this.packageService.unassignFromUser(_id);
@@ -105,11 +108,12 @@ export class PackageController {
   //   return this.packageService.delete(_id);
   // }
 
-
   @Put(':_id/delivered')
   @ApiBearerAuth('idToken')
   @ApiParam({ name: '_id', required: true, type: String })
-  async delivered(@Param('_id', ValidateMongoId) _id: Types.ObjectId): Promise<Package> {
+  async delivered(
+    @Param('_id', ValidateMongoId) _id: Types.ObjectId,
+  ): Promise<Package> {
     return await this.packageService.delivered(_id);
   }
 
@@ -120,6 +124,4 @@ export class PackageController {
   async getById(@Param('_id', ValidateMongoId) _id): Promise<Package> {
     return await this.packageService.getById(_id);
   }
-
-
 }
