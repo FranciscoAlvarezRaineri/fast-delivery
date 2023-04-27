@@ -7,6 +7,7 @@ on:
 env:
   PROJECT_ID: fast-delivery-uma
   REGION: us-central1
+  GOOGLE_APPLICATION_CREDENTIALS: "${{ secrets.GOOGLE_CREDENTIALS }}"
 
 jobs:
   build-and-push-backend-image:
@@ -28,9 +29,8 @@ jobs:
           project_id: fast-delivery-uma
       - name: Use gcloud CLI
         run: |
-          gcloud info
           gcloud config set account github-actions@fast-delivery-uma.iam.gserviceaccount.com
-          gcloud auth activate-service-account github-actions@fast-delivery-uma.iam.gserviceaccount.com --key-file=${{ secrets.GCP_SA_KEY }} --project=fast-delivery-uma
+          gcloud auth activate-service-account github-actions@fast-delivery-uma.iam.gserviceaccount.com --key-file=$GOOGLE_APPLICATION_CREDENTIALS --project=fast-delivery-uma
       - name: Build and push Docker image for backend
         run: |
           docker build -t us-east1-docker.pkg.dev/fast-delivery-uma/backend/backend ./fd-backend/
