@@ -35,6 +35,5 @@ jobs:
           service: backend
           region: us-east1
           image: us-east1-docker.pkg.dev/fast-delivery-uma/backend/backend
-          env_vars: PORT=8000
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
