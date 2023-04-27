@@ -23,10 +23,6 @@ jobs:
           project_id: fast-delivery-uma
           service_account: "staffysp5@gmail.com"
           credentials_json: ${{ secrets.GCP_SA_KEY }}
-      - name: Log in to Google Cloud
-        uses: google-github-actions/setup-gcloud@v1
-        with:
-          project_id: fast-delivery-uma
       - name: Build and push Docker image for backend
         run: |
           docker build -t us-east1-docker.pkg.dev/fast-delivery-uma/backend/backend ./fd-backend/
