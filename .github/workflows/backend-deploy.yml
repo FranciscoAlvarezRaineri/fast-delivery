@@ -30,6 +30,7 @@ jobs:
         run: |
           gcloud info
           gcloud config set account github-actions@fast-delivery-uma.iam.gserviceaccount.com
+          gcloud auth activate-service-account github-actions@fast-delivery-uma.iam.gserviceaccount.com --key-file=${{ secrets.GCP_SA_KEY }} --project=fast-delivery-uma
       - name: Build and push Docker image for backend
         run: |
           docker build -t us-east1-docker.pkg.dev/fast-delivery-uma/backend/backend ./fd-backend/
