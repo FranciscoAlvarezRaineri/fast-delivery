@@ -32,3 +32,12 @@ jobs:
           docker build -t us-east1-docker.pkg.dev/fast-delivery-uma/backend/backend ./fd-backend/
           gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-east1-docker.pkg.dev
           docker push us-east1-docker.pkg.dev/fast-delivery-uma/backend/backend
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          service: backend
+          region: us-east1
+          image: us-east1-docker.pkg.dev/fast-delivery-uma/backend/backend
+      - name: Show Output
+        run: echo ${{ steps.deploy.outputs.url }}
